@@ -6,6 +6,7 @@ const port = 3000;
 
 app.get('/', async (req, res) => {
     const personaje = await PersonajeService.getAll();
+    console.log("/GET (getAll - Personajes)")
     res.status(200).send(personaje);
 })
 

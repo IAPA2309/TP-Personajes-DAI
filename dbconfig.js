@@ -4,7 +4,7 @@ const config = {
     server: 'A-PHZ2-AMI-009',
     database: 'Personajes',
     options: {
-        trustedServerCertficate: true,
+        trustServerCertificate: true,
         trustedConnection: true
     }
 }
