@@ -4,7 +4,7 @@ import PersonajeService from './src/services/personajes.services.js';
 const app = express();
 const port = 3000;
 
-app.get('/', async (req, res) => {
+app.get('/characters', async (req, res) => {
     const personaje = await PersonajeService.getAll();
     console.log("/GET (getAll - Personajes)")
     res.status(200).send(personaje);
