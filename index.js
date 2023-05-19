@@ -5,8 +5,8 @@ const app = express();
 const port = 3000;
 
 app.get('/characters', async (req, res) => {
-    const personaje = await PersonajeService.getAll();
-    console.log("/GET (getAll - Personajes)")
+    const personaje = await PersonajeService.getAllCharacters();
+    console.log("/GET characters (PersonajeService.getAllCharacters)")
     res.status(200).send(personaje);
 })
 
