@@ -1,7 +1,9 @@
 class Pelicula {
-    id;
-    imagen;
-    titulo;
-    fechaCreacion;
-    calificacion;
+    constructor(id, imagen, titulo, fechaCreacion, calificacion){
+        this.id = id,
+        this.imagen = imagen,
+        this.titulo = titulo,
+        this.fechaCreacion = fechaCreacion,
+        this.calificacion = calificacion
+    }
 }
