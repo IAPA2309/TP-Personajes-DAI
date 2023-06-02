@@ -64,11 +64,12 @@ export default class PersonajeService {
   }
   static updateCharacter = async (personaje) => {
     const insertQuery =
-    "UPDATE Personajes SET imagen = @pImagen, nombre = @pNombre, edad = @pEdad, peso = @pPeso, historia = @pHistoria, peliculas = @pPeliculas";
+    "UPDATE Personajes SET imagen = @pImagen, nombre = @pNombre, edad = @pEdad, peso = @pPeso, historia = @pHistoria, peliculas = @pPeliculas WHERE id = @pId";
     try {
     let pool = await sql.connect(config);
     let result = await pool
       .request()
+      .input("pId", sql.Int, personaje.id)
       .input("pImagen", sql.VarChar(150), personaje.imagen)
       .input("pNombre", sql.VarChar(50), personaje.nombre)
       .input("pEdad", sql.Int, personaje.edad)

@@ -7,3 +7,5 @@ class Pelicula {
         this.calificacion = calificacion
     }
 }
+
+export default Pelicula;
