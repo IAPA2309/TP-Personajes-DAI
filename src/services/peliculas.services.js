@@ -4,18 +4,17 @@ import pkg from "mssql";
 const { MAX } = pkg;
 
 export default class PeliculasService {
-
     static getAllMovies = async () => {
-        let returnEntity = null;
-        try{
-            let pool = await sql.connect(config);
-            let result = await pool.request()
-                .query("SELECT Imagen, Titulo, Id FROM Peliculas");
-            returnEntity = result.recordset[0];
-        }catch(error){
-            console.log(error)
-        }
-        return returnEntity;
+      let returnEntity = null;
+      try{
+          let pool = await sql.connect(config);
+          let result = await pool.request()
+            .query("SELECT Imagen, Titulo, Id FROM Peliculas");
+          returnEntity = result.recordset;
+      }catch(error){
+          console.log(error)
+      }
+      return returnEntity;
     }
     static getMovieById = async (id) => {
       let returnEntity = null;

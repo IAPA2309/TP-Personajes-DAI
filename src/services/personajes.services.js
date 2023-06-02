@@ -10,7 +10,7 @@ export default class PersonajeService {
         let pool = await sql.connect(config);
         let result = await pool.request()
             .query("SELECT Imagen, Nombre, Id FROM Personajes");
-        returnEntity = result.recordset[0];
+        returnEntity = result.recordset;
     }catch(error){
         console.log(error)
     }

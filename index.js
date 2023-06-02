@@ -40,6 +40,7 @@ app.post('/characters', async (req, res) => {
         personaje.historia = req.body.historia;
         personaje.peliculas = req.body.peliculas;
         await PersonajeService.createCharacter(personaje);
+        res.status(200).json({ message: 'Personaje actualizado' })
         res.status(200).json({ message: 'Personaje creado' })
     }catch(error){
         console.log(error);
@@ -75,9 +76,9 @@ app.put('/characters/:id', async (req, res) => {
 })
 
 app.get('/movies', async (req, res) => {
-    const pelicula = await PeliculaService.getAllMovies();
+    const peliculas = await PeliculaService.getAllMovies();
     console.log("/GET movies (PeliculaService.getAllMovies)")
-    res.status(200).send(pelicula);
+    res.status(200).send(peliculas);
 })
 app.get('/movies/:id', async (req, res) => {
     const pelicula = await PeliculaService.getMovieById(req.params.id);
@@ -119,6 +120,7 @@ app.put('/movies/:id', async (req, res) => {
         pelicula.fechaCreacion = req.body.fechaCreacion;
         pelicula.calificacion = req.body.calificacion;
         await PeliculaService.updateMovie(pelicula);
+        res.status(200).json({ message: 'Pelicula actualizada' })
     }catch(error){
         console.log(error);
         res.status(500).json({ message: 'Fallo el update' });
