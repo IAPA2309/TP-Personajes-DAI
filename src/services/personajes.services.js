@@ -81,4 +81,20 @@ export default class PersonajeService {
       console.log(error);
     }
   }
+  static searchCharacterByQueryName = async (queryParam) => {
+    let returnEntity = null;
+    try{
+      let pool = await sql.connect(config);
+      let result = await pool
+      .request()
+      .input("pQueryParam", sql.VarChar(50), queryParam)
+      .query("SELECT * FROM Personajes WHERE nombre LIKE '%@romp%'");
+      console.log(result);
+      console.log(queryParam);
+      returnEntity = result.recordset;
+    }catch(error){
+        console.log(error)
+    }
+    return returnEntity;
+  }
 }

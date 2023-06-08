@@ -19,6 +19,10 @@ app.use(
   express.static(path.join(__dirname, "public"), { type: "text/javascript" })
 );
 
+app.get('/a', (req, res) => {
+    res.status(200).json( { message: 'A'});
+})
+
 app.get('/characters', async (req, res) => {
     const personaje = await PersonajeService.getAllCharacters();
     console.log("/GET characters (PersonajeService.getAllCharacters)")
@@ -27,6 +31,11 @@ app.get('/characters', async (req, res) => {
 app.get('/characters/:id', async (req, res) => {
     const personaje = await PersonajeService.getCharacterById(req.params.id);
     console.log("/GET characters/:id (PersonajeService.getCharacterById)")
+    res.status(200).send(personaje);
+})
+app.get('/character', async (req, res) => {
+    const personaje = await PersonajeService.searchCharacterByQueryName(req.query.nombre);
+    console.log("/GET characters/?nombre=query (PersonajeService.searchCharacterByQueryName)")
     res.status(200).send(personaje);
 })
 app.post('/characters', async (req, res) => {
