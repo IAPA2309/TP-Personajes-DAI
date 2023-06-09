@@ -1,7 +1,7 @@
 const config = {
     user: 'Personajes',
     password: 'Personajes',
-    server: 'A-PHZ2-CIDI-037',
+    server: 'A-PHZ2-AMI-004',
     database: 'DAI-Personajes',
     options: {
         trustServerCertificate: true,

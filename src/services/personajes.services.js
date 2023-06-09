@@ -83,17 +83,16 @@ export default class PersonajeService {
   }
   static searchCharacterByQueryName = async (queryParam) => {
     let returnEntity = null;
+    queryParam = '%'+queryParam+'%';
     try{
       let pool = await sql.connect(config);
       let result = await pool
       .request()
-      .input("pQueryParam", sql.VarChar(50), queryParam)
-      .query("SELECT * FROM Personajes WHERE nombre LIKE '%@romp%'");
-      console.log(result);
-      console.log(queryParam);
+      .input("pQueryParam", sql.VarChar(150), queryParam)
+      .query("SELECT * FROM Personajes WHERE nombre LIKE @pQueryParam")
       returnEntity = result.recordset;
     }catch(error){
-        console.log(error)
+      console.log(error)
     }
     return returnEntity;
   }

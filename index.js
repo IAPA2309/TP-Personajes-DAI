@@ -34,7 +34,7 @@ app.get('/characters/:id', async (req, res) => {
     res.status(200).send(personaje);
 })
 app.get('/character', async (req, res) => {
-    const personaje = await PersonajeService.searchCharacterByQueryName(req.query.nombre);
+    const personaje = await PersonajeService.searchCharacterByQueryName(req.query.name);
     console.log("/GET characters/?nombre=query (PersonajeService.searchCharacterByQueryName)")
     res.status(200).send(personaje);
 })
