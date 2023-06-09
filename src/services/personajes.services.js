@@ -16,6 +16,7 @@ export default class PersonajeService {
     }
     return returnEntity;
   }
+  
   static getCharacterById = async (id) => {
     let returnEntity = null;
     try {
@@ -30,6 +31,7 @@ export default class PersonajeService {
     }
     return returnEntity;
   }
+
   static createCharacter = async (personaje) => {
     const insertQuery =
     "INSERT INTO Personajes (Imagen, Nombre, Edad, Peso, Historia, Peliculas) VALUES (@pImagen, @pNombre, @pEdad, @pPeso, @pHistoria, @pPeliculas)";
@@ -42,12 +44,13 @@ export default class PersonajeService {
       .input("pEdad", sql.Int, personaje.edad)
       .input("pPeso", sql.Float, personaje.peso)
       .input("pHistoria", sql.VarChar(MAX), personaje.historia)
-      .input("pPeliculas", sql.VarChar(MAX), personaje.peliculas)
+      .input("pPeliculas", sql.Int, personaje.peliculas)
       .query(insertQuery);
     } catch (error) {
       console.log(error);
     }
   }
+
   static deleteCharacterById = async (id) => {
     let rowsAffected = 0;
     try {
@@ -62,6 +65,7 @@ export default class PersonajeService {
     }
     return rowsAffected;
   }
+
   static updateCharacter = async (personaje) => {
     const insertQuery =
     "UPDATE Personajes SET imagen = @pImagen, nombre = @pNombre, edad = @pEdad, peso = @pPeso, historia = @pHistoria, peliculas = @pPeliculas WHERE id = @pId";
@@ -75,12 +79,13 @@ export default class PersonajeService {
       .input("pEdad", sql.Int, personaje.edad)
       .input("pPeso", sql.Float, personaje.peso)
       .input("pHistoria", sql.VarChar(MAX), personaje.historia)
-      .input("pPeliculas", sql.VarChar(MAX), personaje.peliculas)
+      .input("pPeliculas", sql.Int, personaje.peliculas)
       .query(insertQuery);
     } catch (error) {
       console.log(error);
     }
   }
+
   static searchCharacterByQueryName = async (queryParam) => {
     let returnEntity = null;
     queryParam = '%'+ queryParam +'%';
@@ -96,6 +101,7 @@ export default class PersonajeService {
     }
     return returnEntity;
   }
+
   static searchCharacterByQueryAge= async (queryParam) => {
     let returnEntity = null;
     try{
@@ -110,6 +116,7 @@ export default class PersonajeService {
     }
     return returnEntity;
   }
+
   static searchCharacterByQueryName = async (queryParam) => {
     let returnEntity = null;
     queryParam = '%'+ queryParam +'%';
@@ -119,6 +126,21 @@ export default class PersonajeService {
       .request()
       .input("pQueryParam", sql.VarChar(150), queryParam)
       .query("SELECT * FROM Personajes WHERE nombre LIKE @pQueryParam")
+      returnEntity = result.recordset;
+    }catch(error){
+      console.log(error)
+    }
+    return returnEntity;
+  }
+
+  static searchCharacterByQueryMovieId = async (queryParam) => {
+    let returnEntity = null;
+    try{
+      let pool = await sql.connect(config);
+      let result = await pool
+      .request()
+      .input("pQueryParam", sql.Int, queryParam)
+      .query("SELECT * FROM Personajes WHERE peliculas LIKE @pQueryParam")
       returnEntity = result.recordset;
     }catch(error){
       console.log(error)

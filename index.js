@@ -24,33 +24,39 @@ app.get('/a', (req, res) => {
 })
 
 app.get('/characters', async (req, res) => {
-    const personaje = await PersonajeService.getAllCharacters();
-    console.log("/GET characters (PersonajeService.getAllCharacters)")
-    res.status(200).send(personaje);
-})
-app.get('/characters/:id', async (req, res) => {
-    const personaje = await PersonajeService.getCharacterById(req.params.id);
-    console.log("/GET characters/:id (PersonajeService.getCharacterById)")
-    res.status(200).send(personaje);
-})
-app.get('/character', async (req, res) => {
-    let personaje;
 
-    console.log(req.query.name);
-    console.log(req.query.age);
+    let personaje;
+    personaje = await PersonajeService.getAllCharacters();
 
     if(req.query.age!=undefined){
         personaje = await PersonajeService.searchCharacterByQueryAge(req.query.age);
-        console.log("/GET characters/?age=query (PersonajeService.searchCharacterByQueryAge)")
+        console.log("/GET characters/?age=query (PersonajeService.searchCharacterByQueryAge)");
     }
 
     if(req.query.name!=undefined){
         personaje = await PersonajeService.searchCharacterByQueryName(req.query.name);
-        console.log("/GET characters/?name=query (PersonajeService.searchCharacterByQueryName)")
+        console.log("/GET characters/?name=query (PersonajeService.searchCharacterByQueryName)");
+    }
+
+    if(req.query.idMovie!=undefined){
+        personaje = await PersonajeService.searchCharacterByQueryMovieId(req.query.idMovie);
+        console.log("/GET characters/?idMovie=query (PersonajeService.searchCharacterByQueryidMovie)");
     }
 
     res.status(200).send(personaje);
 })
+app.get('/characters/:id', async (req, res) => {
+
+    try{
+        const personaje = await PersonajeService.getCharacterById(req.params.id);
+        console.log("/GET characters/:id (PersonajeService.getCharacterById)");
+        res.status(200).send(personaje);
+    }catch(error){
+        console.log(error)
+        res.status(500).json({ error: ' Fallo el getById ' });
+    }
+})
+
 app.post('/characters', async (req, res) => {
     console.log(req);
     try{
@@ -69,6 +75,7 @@ app.post('/characters', async (req, res) => {
         res.status(500).json({ error: ' Fallo el insert ' });
     }
 })
+
 app.delete('/characters/:id', async (req, res) => {
     console.log('/DELETE characters/:id (PersonajeService.deleteCharacterById)');
     try{
@@ -79,6 +86,7 @@ app.delete('/characters/:id', async (req, res) => {
         res.status(200).json({ message: 'Fallo el delete' });
     }
 })
+
 app.put('/characters/:id', async (req, res) => {
     console.log('/PUT characters/:id (PersonajeService.updateCharacter)');
     try{
@@ -98,15 +106,29 @@ app.put('/characters/:id', async (req, res) => {
 })
 
 app.get('/movies', async (req, res) => {
-    const peliculas = await PeliculaService.getAllMovies();
-    console.log("/GET movies (PeliculaService.getAllMovies)")
+    
+    let peliculas;
+    peliculas = await PeliculaService.getAllMovies();
+
+    if(req.query.name!=undefined){
+        peliculas = await PeliculaService.searchMovieByQueryName(req.query.name);
+        console.log("/GET movies/?name=query (PeliculaService.searchCharacterByQueryName)");
+    }
+
+    if(req.query.order!=undefined){
+        peliculas = await PeliculaService.searchMovieByOrder(req.query.order);
+        console.log("/GET movies/?name=query (PeliculaService.searchMovieByOrder)");
+    }
+
     res.status(200).send(peliculas);
 })
+
 app.get('/movies/:id', async (req, res) => {
     const pelicula = await PeliculaService.getMovieById(req.params.id);
     console.log("/GET movies/:id (PeliculaService.getMovieById)")
     res.status(200).send(pelicula);
 })
+
 app.post('/movies', async (req, res) => {
     console.log(req);
     try{
@@ -122,6 +144,7 @@ app.post('/movies', async (req, res) => {
         res.status(500).json({ error: ' Fallo el insert ' });
     }
 })
+
 app.delete('/movies/:id', async (req, res) => {
     console.log('/DELETE movies/:id (PeliculaService.deleteMovieById)');
     try{
@@ -132,6 +155,7 @@ app.delete('/movies/:id', async (req, res) => {
         res.status(200).json({ message: 'Fallo el delete' });
     }
 })
+
 app.put('/movies/:id', async (req, res) => {
     console.log('/PUT movies/:id (PeliculaService.updateMovie)');
     try{
