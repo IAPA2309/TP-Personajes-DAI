@@ -58,7 +58,6 @@ app.get('/characters/:id', async (req, res) => {
 })
 
 app.post('/characters', async (req, res) => {
-    console.log(req);
     try{
         const personaje = new Personaje();
         personaje.imagen = req.body.imagen;
@@ -130,7 +129,7 @@ app.get('/movies/:id', async (req, res) => {
 })
 
 app.post('/movies', async (req, res) => {
-    console.log(req);
+    console.log('/DELETE movies/:id (PeliculaService.createMovie(pelicula)');
     try{
         const pelicula = new Pelicula();
         pelicula.imagen = req.body.imagen;
