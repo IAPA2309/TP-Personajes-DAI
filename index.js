@@ -45,6 +45,7 @@ app.get('/characters', async (req, res) => {
 
     res.status(200).send(personaje);
 })
+
 app.get('/characters/:id', async (req, res) => {
 
     try{

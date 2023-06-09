@@ -24,8 +24,19 @@ export default class PeliculasService {
       let result = await pool
         .request()
         .input("pId", sql.Int, id)
-        .query("SELECT * FROM Peliculas WHERE id = @pId");
+        // .query("SELECT * FROM Peliculas WHERE id = @pId");
+        .query("SELECT Peliculas.*, Personajes.nombre as personajes FROM Peliculas INNER JOIN Personajes ON Peliculas.id = Personajes.peliculas AND Peliculas.id = @pId");
       returnEntity = result.recordsets[0][0];
+
+      if(returnEntity == null) {
+        let pool = await sql.connect(config);
+        let result = await pool
+        .request()
+        .input("pId", sql.Int, id)
+        .query("SELECT * FROM Peliculas WHERE id = @pId");
+        returnEntity = result.recordsets[0][0];
+      }
+
     } catch (error) {
       console.log(error);
     }
