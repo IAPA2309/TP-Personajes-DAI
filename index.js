@@ -34,8 +34,21 @@ app.get('/characters/:id', async (req, res) => {
     res.status(200).send(personaje);
 })
 app.get('/character', async (req, res) => {
-    const personaje = await PersonajeService.searchCharacterByQueryName(req.query.name);
-    console.log("/GET characters/?nombre=query (PersonajeService.searchCharacterByQueryName)")
+    let personaje;
+
+    console.log(req.query.name);
+    console.log(req.query.age);
+
+    if(req.query.age!=undefined){
+        personaje = await PersonajeService.searchCharacterByQueryAge(req.query.age);
+        console.log("/GET characters/?age=query (PersonajeService.searchCharacterByQueryAge)")
+    }
+
+    if(req.query.name!=undefined){
+        personaje = await PersonajeService.searchCharacterByQueryName(req.query.name);
+        console.log("/GET characters/?name=query (PersonajeService.searchCharacterByQueryName)")
+    }
+
     res.status(200).send(personaje);
 })
 app.post('/characters', async (req, res) => {
