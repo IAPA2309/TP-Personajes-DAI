@@ -68,7 +68,6 @@ app.post('/characters', async (req, res) => {
         personaje.historia = req.body.historia;
         personaje.peliculas = req.body.peliculas;
         await PersonajeService.createCharacter(personaje);
-        res.status(200).json({ message: 'Personaje actualizado' })
         res.status(200).json({ message: 'Personaje creado' })
     }catch(error){
         console.log(error);
@@ -99,6 +98,7 @@ app.put('/characters/:id', async (req, res) => {
         personaje.historia = req.body.historia;
         personaje.peliculas = req.body.peliculas;
         await PersonajeService.updateCharacter(personaje);
+        res.status(200).json({ message: 'Personaje actualizado' })
     }catch(error){
         console.log(error);
         res.status(500).json({ message: 'Fallo el update' });
